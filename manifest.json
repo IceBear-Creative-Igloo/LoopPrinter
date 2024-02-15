@@ -4,12 +4,12 @@
   "version": "0.1",
   "description": "THIS EXTENSION IS FOR BETA TESTING - Print a Microsoft Loop page!",
   "permissions": ["activeTab", "scripting", "tabs"],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": ["https://loop.microsoft.com/*"],
   "content_scripts": [
     {
       "js": ["scripts/content.js"],
       "matches": [
-        "<all_urls>"
+        "https://loop.microsoft.com/*"
       ]
     }
   ],
