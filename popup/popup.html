@@ -32,6 +32,10 @@
         button:hover {
             background-color: #0056b3;
         }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -41,6 +45,7 @@
             Loop Printer</h1>
         
         <button id="execBtn">Print current page</button>
+        <button id="debugBtn">DEBUG</button>
     </div>
     <script src="popup.js"></script>
 </body>

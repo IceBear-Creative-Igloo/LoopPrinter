@@ -305,8 +305,8 @@
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    newWindow.print();
-    newWindow.close();
+    // newWindow.print();
+    // newWindow.close();
 
     // chrome.runtime.sendMessage({ status: "printDone" });
     return true;
