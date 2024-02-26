@@ -1,6 +1,6 @@
 const execBtn = document.getElementById("execBtn");
 const debugBtn = document.getElementById("debugBtn");
-let DEBUG = true;
+let DEBUG = false;
 let documentLoadingComplete = false;
 
 const messagesBox = document.getElementById("messages");
@@ -100,4 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Button event listeners
   execBtn.addEventListener("click", listData);
   debugBtn.addEventListener("click", debugWindow);
+  if(DEBUG) {
+    debugBtn.style.display = "block";
+  }
 });
