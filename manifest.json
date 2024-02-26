@@ -3,7 +3,7 @@
   "name": "Loop Printer BETA",
   "version": "0.1",
   "description": "THIS EXTENSION IS FOR BETA TESTING - Print a Microsoft Loop page!",
-  "permissions": ["activeTab", "scripting", "tabs"],
+  "permissions": ["activeTab", "scripting", "tabs", "declarativeContent"],
   "host_permissions": ["https://loop.microsoft.com/*"],
   "content_scripts": [
     {
@@ -13,6 +13,9 @@
       ]
     }
   ],
+  "background": {
+    "service_worker": "worker.js"
+  },
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {

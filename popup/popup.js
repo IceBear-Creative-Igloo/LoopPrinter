@@ -31,12 +31,12 @@ function toggleAvailability(info, tabId, activeTab) {
     documentLoadingComplete = true;
     execBtn.disabled = false;
     debugBtn.disabled = false;
-    contetLoadingMsg.style.display = "none";
+    // contetLoadingMsg.style.display = "none";
   } else {
     console.log("still loading [chrome.tabs.onUpdated]");
     execBtn.disabled = true;
     debugBtn.disabled = true;
-    contetLoadingMsg.style.display = "block";
+    // contetLoadingMsg.style.display = "block";
     documentLoadingComplete = false;
   }
 }
