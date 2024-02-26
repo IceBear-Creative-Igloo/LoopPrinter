@@ -1,9 +1,11 @@
 (async () => {
-  function _log(isDev, log) {
-    if (isDev) {
-      console.log(log);
+  const log = function () {
+    if (DEBUG) {
+      console.log.apply(console, arguments);
     }
-  }
+  };
+
+  let DEBUG = false;
 
   const allContent = [];
 
@@ -34,7 +36,7 @@
     content
       .querySelectorAll('[data-automation-type="Tablero"]')
       .forEach((tableContainer) => {
-        // _log(isDev, ["table", tableContainer]);
+        log("table", tableContainer);
         // #tableWrapper-
         let table = tableContainer.querySelector('[id*="tableWrapper-"');
         // table.querySelectorAll('[contenteditable="true"]').forEach((c) => { c.remove(); });
@@ -172,7 +174,7 @@
     _html.appendChild(_head);
     _html.appendChild(_body);
 
-    // console.log(_html);
+    log(_html);
     return _html;
   }
 
@@ -182,7 +184,7 @@
     document
       .querySelectorAll(".scriptor-canvas .scriptor-pageContainer")
       .forEach((pc) => {
-        // console.log("pageContainer", pc);
+        log("pageContainer", pc);
 
         pc.querySelectorAll(".scriptor-pageFrameContainer").forEach((e) => {
           totalHeight += e.offsetHeight;
@@ -243,19 +245,19 @@
     };
 
     const observer = new IntersectionObserver((entries) => {
-      // console.log('observer entries', entries);
+      log('observer entries', entries);
       entries.forEach(async (entry) => {
-        // console.log("observe entry", entry);
+        log("observe entry", entry);
         if (entry.isIntersecting) {
           let element = entry.target;
-          //   console.log("isIntersecting", element, entry);
-          //   console.log("innerHTML", element.innerHTML);
+          log("isIntersecting", element, entry);
+          log("innerHTML", element.innerHTML);
           while (
             element &&
             element !== document.body &&
             element.innerHTML === ""
           ) {
-            // console.log("wait for innerHTML to have content", element);
+            log("wait for innerHTML to have content", element);
             await new Promise((resolve) => setTimeout(resolve, 600));
           }
           const htmlContent = element.innerHTML;
@@ -269,7 +271,7 @@
       });
     }, observerOptions);
 
-    // console.log("allContent", allContent);
+    log("allContent", allContent);
 
     // .scriptor-canvas .scriptor-pageContainer .scriptor-pageFrameContainer
     document
@@ -278,7 +280,7 @@
         ".scriptor-canvas .scriptor-pageContainer .scriptor-pageFrameContainer"
       )
       .forEach((element) => {
-        // console.log("setup observer", element);
+        log("setup observer", element);
         observer.observe(element);
       });
   }
@@ -293,44 +295,46 @@
     let title = document.title;
     let processedContent = await getContentReady(capturedHTML, title);
     let newWindow = window.open(" ", "_blank");
-    // console.log('newWindow', newWindow);
+    log('newWindow', newWindow);
     newWindow.document.open();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     newWindow.document.write(processedContent.innerHTML);
     newWindow.document.close();
-    // console.log('newWindow document write', )
+    log('newWindow document write');
 
     newWindow.focus();
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // newWindow.print();
-    // newWindow.close();
+    if(!DEBUG) {
+      newWindow.print();
+      newWindow.close();
+    }
 
     // chrome.runtime.sendMessage({ status: "printDone" });
     return true;
   }
 
   chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
-    const isDev = msg.isDev;
-    console.log("isDev in content", isDev);
-    // _log(isDev, [
-    //   "Content",
-    //   sender.tab
-    //     ? "from a content script:" + sender.tab.url
-    //     : "from the extension",
-    // ]);
+    DEBUG = msg.isDev;
+    log("isDev in content", DEBUG);
+    log(
+      "Content",
+      sender.tab
+        ? "from a content script:" + sender.tab.url
+        : "from the extension",
+    );
 
     if (msg.action === "test") {
-      //   _log(isDev, ['Run action "test" on ', msg.tabId]);
+      log('Run action "test" on ', msg.tabId);
       sendResponse({ content: "content.js saying goodbey" });
     }
 
     if (msg.action === "print-loop") {
-      // _log(isDev, ['Run action "print-loop" on ', msg.tabId]);
+      log('Run action "print-loop" on ', msg.tabId);
       captureAndDisplayContent().then(() => {
-        console.log("captureAndDisplay done");
+        log("captureAndDisplay done");
         sendResponse({ status: "printDone" });
       });
     }
