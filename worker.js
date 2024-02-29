@@ -49,7 +49,7 @@ chrome.runtime.onInstalled.addListener(() => {
     let exampleRule = {
       conditions: [
         new chrome.declarativeContent.PageStateMatcher({
-          pageUrl: { urlContains: "loop.microsoft.com" },
+          pageUrl: { urlContains: "loop.microsoft.com/p/" },
         }),
       ],
       actions: [new chrome.declarativeContent.ShowAction()],

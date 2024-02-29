@@ -22,7 +22,7 @@ const log = function () {
 };
 
 function isLoopPage(tab) {
-  return (tab.url.includes('loop.microsoft.com') && tab.active && tab.status === "complete");
+  return (tab.url.includes('loop.microsoft.com/p/') && tab.active && tab.status === "complete");
 }
 
 function toggleAvailability(info, tabId, activeTab) {

@@ -1,15 +1,15 @@
 {
   "manifest_version": 3,
   "name": "Loop Printer BETA",
-  "version": "0.1",
+  "version": "0.1.1",
   "description": "THIS EXTENSION IS FOR BETA TESTING - Print a Microsoft Loop page!",
-  "permissions": ["activeTab", "scripting", "tabs", "declarativeContent"],
-  "host_permissions": ["https://loop.microsoft.com/*"],
+  "permissions": ["activeTab", "tabs", "declarativeContent"],
+  "host_permissions": ["https://loop.microsoft.com/p/*"],
   "content_scripts": [
     {
       "js": ["scripts/content.js"],
       "matches": [
-        "https://loop.microsoft.com/*"
+        "https://loop.microsoft.com/p/*"
       ]
     }
   ],
